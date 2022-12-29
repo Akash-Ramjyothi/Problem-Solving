@@ -19,7 +19,6 @@ public:
             }
             
             while(i<n && tasks[i][0]<=currentTime){
-                //pq.push(tasks[i][1],tasks[i][2]);
                 pq.emplace(tasks[i][1],tasks[i][2]);
                 i++;
             }
