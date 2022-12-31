@@ -15,18 +15,18 @@ class Solution{
     //Function to find the maximum occurred integer in all ranges.
     int maxOccured(int L[], int R[], int n, int maxx){
     
-        // Your code here
+        // Your code here 
         int freq[maxx]={0};
         for(int i=0;i<n;i++){
-            for(int j=L[i];j<=R[i];j++){
-                freq[j]++;
-            }
+            freq[L[i]]++;
+            freq[R[i]+1]--;
         }
         int res=0;
         for(int i=1;i<maxx;i++){
-            if(freq[res]<freq[i]){
+            freq[i]=freq[i]+freq[i-1];
+            if(freq[i]>freq[res]){
                 res=i;
-            } 
+            }
         }
         return res;
     }
