@@ -1,31 +1,37 @@
 class Solution {
 public:
-    bool checkPalindrome(string str, int startIndex, int lastIndex){
-        while(startIndex <= lastIndex){
-            if(str[startIndex] != str[lastIndex])
-                return false;
-            startIndex++;
-            lastIndex--;
-        }
-        return true;
-    }
-    void palindromePartition(int index, vector<string>& ds, vector<vector<string>>& output, string str){
-        if(index == str.length()){
-            output.push_back(ds);
+    
+    vector<vector<string>> result;
+    
+    void dfs(int ind, string s, vector<string> &str){
+        if(ind==s.size()){
+            result.push_back(str);
             return;
         }
-        for(int i = index; i < str.length(); i++){
-            if(checkPalindrome(str, index, i)){
-                ds.push_back(str.substr(index, i - index + 1));
-                palindromePartition(i+1, ds, output, str);
-                ds.pop_back();
+        
+        for(int i=ind;i<s.size();i++){
+            if(isPalindrome(ind,i,s)){
+                str.push_back(s.substr(ind,i-ind+1));
+                dfs(i+1,s,str);
+                str.pop_back();
             }
         }
     }
+    
+    bool isPalindrome(int start, int end, string s){
+        while(start<end){
+            if(s[start]!=s[end]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+    
     vector<vector<string>> partition(string s) {
-        vector<vector<string>> output;
-        vector<string> ds;
-        palindromePartition(0, ds, output, s);
-        return output;
+        vector<string> str;
+        dfs(0,s,str);
+        return result;
     }
 };
